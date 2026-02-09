@@ -1,8 +1,8 @@
 package edu.ticket.state;
 
 import edu.ticket.Ticket;
-import edu.ticket.strategy.BugResponseStrategy;
-import edu.ticket.strategy.GenericResponseStrategy;
+import edu.ticket.factory.ResponseStrategyFactory;
+import edu.ticket.factory.StateFactory;
 import edu.ticket.strategy.TicketResponseStrategy;
 
 public class InProgressState implements TicketState {
@@ -12,18 +12,14 @@ public class InProgressState implements TicketState {
 
         System.out.println("Working on ticket");
 
-        TicketResponseStrategy strategy;
-
-        if (ticket.getType().equals("BUG")) {
-            strategy = new BugResponseStrategy();
-        } else {
-            strategy = new GenericResponseStrategy();
-        }
+        // Strategy: انتخاب نوع پاسخ
+        TicketResponseStrategy strategy =
+                ResponseStrategyFactory.create(ticket.getType());
 
         strategy.respond(ticket);
 
-        // ✅ انتقال صحیح و نهایی
-        ticket.setState(new ResolvedState());
+        // ✅ انتقال صحیح به وضعیت بعدی
+        ticket.setState(StateFactory.create("RESOLVED"));
     }
 
     @Override
@@ -31,4 +27,3 @@ public class InProgressState implements TicketState {
         return "IN_PROGRESS";
     }
 }
-

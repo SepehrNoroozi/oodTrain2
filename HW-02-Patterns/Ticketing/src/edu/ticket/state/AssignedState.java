@@ -13,7 +13,7 @@ public class AssignedState implements TicketState {
             System.out.println("Assigned to support");
         }
 
-        ticket.setState(new InProgressState());
+        ticket.setState(StateFactory.create("RESOLVED"));
     }
 
     @Override

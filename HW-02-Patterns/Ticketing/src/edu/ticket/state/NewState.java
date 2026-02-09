@@ -15,7 +15,7 @@ public class NewState implements TicketState {
         }
 
         // انتقال به وضعیت بعدی (فعلاً فقط مفهومی)
-        ticket.setState(new InProgressState());
+        ticket.setState(StateFactory.create("RESOLVED"));
     }
 
     @Override
