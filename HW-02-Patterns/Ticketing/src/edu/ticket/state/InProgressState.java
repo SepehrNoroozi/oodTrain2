@@ -1,6 +1,9 @@
 package edu.ticket.state;
 
 import edu.ticket.Ticket;
+import edu.ticket.strategy.BugResponseStrategy;
+import edu.ticket.strategy.GenericResponseStrategy;
+import edu.ticket.strategy.TicketResponseStrategy;
 
 public class InProgressState implements TicketState {
 
@@ -9,13 +12,18 @@ public class InProgressState implements TicketState {
 
         System.out.println("Working on ticket");
 
+        TicketResponseStrategy strategy;
+
         if (ticket.getType().equals("BUG")) {
-            System.out.println("Sending bug response");
+            strategy = new BugResponseStrategy();
         } else {
-            System.out.println("Sending generic response");
+            strategy = new GenericResponseStrategy();
         }
 
-        ticket.setState(new InProgressState());
+        strategy.respond(ticket);
+
+        // ✅ انتقال صحیح و نهایی
+        ticket.setState(new ResolvedState());
     }
 
     @Override
@@ -23,3 +31,4 @@ public class InProgressState implements TicketState {
         return "IN_PROGRESS";
     }
 }
+

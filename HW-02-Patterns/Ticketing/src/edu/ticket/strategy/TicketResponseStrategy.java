@@ -1,5 +1,7 @@
 package edu.ticket.strategy;
 
-public class TicketResponseStrategy {
-    
+import edu.ticket.Ticket;
+
+public interface TicketResponseStrategy {
+    void respond(Ticket ticket);
 }
